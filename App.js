@@ -7,14 +7,9 @@
  */
 
 import React, { Component } from "react";
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  ScrollView
-} from "react-native";
+import { Platform, StyleSheet, View, TextInput, FlatList } from "react-native";
+import { connect } from "react-redux";
+import { addName, deleteName } from "./src/store/actions/index";
 
 import ListItem from "./src/components/ListItem";
 import CustomRoundButton from "./src/components/CustomRoundButton";
@@ -25,13 +20,7 @@ const instructions = Platform.select({
 });
 
 type Props = {};
-export default class App extends Component<Props> {
-  state = {
-    firstName: "",
-    savedFirstName: "",
-    firstNamesList: []
-  };
-
+class App extends Component<Props> {
   firstNameChangedHandler = val => {
     this.setState({
       firstName: val
@@ -41,49 +30,28 @@ export default class App extends Component<Props> {
     if (this.state.firstName === "") {
       return;
     }
-    this.setState(prevState => {
-      return {
-        savedFirstName: prevState.firstName,
-        firstName: "",
-        firstNamesList: prevState.firstNamesList.concat({
-          key: Math.random(),
-          value: prevState.firstName
-        })
-      };
-    });
+    this.onAddName(this.state.firstName);
   };
   deleteNameFromList = index => {
-    this.setState(prevState => {
-      return {
-        firstNamesList: prevState.firstNamesList.filter(firstName => {
-          return firstName.key !== index;
-        })
-      };
-    });
+    this.props.onDeleteName(index);
   };
   render() {
-    const firstNameListOutput = this.state.firstNamesList.map(firstName => (
-      <ListItem
-        key={firstName.key}
-        firstName={firstName.value}
-        index={firstName.key}
-        onItemsPressed={firstName.key}
-        onItemDeleted={this.deleteNameFromList}
-        /* onItemLongPressed={this.deleteNameFromList} */
-      />
-    ));
+    // const firstNameListOutput = this.state.firstNamesList.map(firstName => (
+    //   <ListItem
+    //     key={firstName.key}
+    //     firstName={firstName.value}
+    //     index={firstName.key}
+    //     onItemsPressed={firstName.key}
+    //     onItemDeleted={this.deleteNameFromList}
+    //     /* onItemLongPressed={this.deleteNameFromList} */
+    //   />
+    // ));
 
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}> Welcome to React Native! </Text>
-
-        <Text style={styles.instructions}> {instructions} </Text>
-
-        <Text style={styles.firstName}> {this.state.savedFirstName} </Text>
-
         <TextInput
           style={styles.input}
-          value={this.state.firstName}
+          value={this.props.firstName}
           onChangeText={this.firstNameChangedHandler}
           placeholder="Enter your First Name"
           placeholderTextColor="#fff"
@@ -94,10 +62,19 @@ export default class App extends Component<Props> {
           btnColor="#d3d3"
           onButtonPress={this.saveFirstNameButtonHandler}
         />
-
-        <ScrollView style={styles.listContainer}>
-          {firstNameListOutput}
-        </ScrollView>
+        
+        <FlatList
+          data={this.propes.firstNamesList}
+          renderItem={({ item }) => (
+            <ListItem
+              key={item.key}
+              firstName={item.value}
+              index={item.key}
+              onItemsPressed={item.key}
+              onItemDeleted={this.deleteNameFromList}
+            />
+          )}
+        />
       </View>
     );
   }
@@ -106,8 +83,8 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: "100%",
     flexDirection: "column",
-    justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "#000"
   },
@@ -144,3 +121,21 @@ const styles = StyleSheet.create({
     margin: 25
   }
 });
+
+const mapStateToProps = state => {
+  return {
+    firstName: state.names.firstNamesList,
+    firstNamesList: state.names.firstName
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onAddName: name => dispatch(name),
+    onDeleteName: key => dispatch(key)
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

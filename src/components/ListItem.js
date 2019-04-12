@@ -8,7 +8,6 @@ const listItem = props => (
   >
     <View style={styles.listItem}>
       <Text>{props.firstName}</Text>
-      <Text>{props.index}</Text>
     </View>
   </TouchableOpacity>
 );
@@ -17,8 +16,6 @@ const styles = StyleSheet.create({
   listItem: {
     width: "100%",
     margin: 15,
-    borderWidth: 2,
-    borderColor: "#adad",
     padding: 10,
     backgroundColor: "#eee"
   }
