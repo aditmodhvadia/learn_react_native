@@ -1,2 +1,2 @@
-export { addName, deleteName } from "./names";
+export { addName, deleteName, saveName } from "./names";
 

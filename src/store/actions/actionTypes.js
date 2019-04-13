@@ -1,2 +1,3 @@
-export const ADD_NAME = 'ADD_NAME';
-export const DELETE_NAME = 'DELETE_NAME';
+export const ADD_NAME = "ADD_NAME";
+export const DELETE_NAME = "DELETE_NAME";
+export const SAVE_NAME = "SAVE_NAME";

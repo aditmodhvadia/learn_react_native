@@ -1,4 +1,4 @@
-import { ADD_NAME, DELETE_NAME } from "../actions/actionTypes";
+import { ADD_NAME, DELETE_NAME, SAVE_NAME } from "./../actions/actionTypes";
 
 const initialState = {
   firstNamesList: [],
@@ -8,22 +8,28 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_NAME:
-    return {
-      ...state,
-      firstName: action.firstName,
+      return {
+        ...state,
+        firstName: action.firstName,
         firstNamesList: state.firstNamesList.concat({
           key: Math.random(),
           value: action.firstName
         })
-    };
+      };
 
     case DELETE_NAME:
-    return {
-      ...state,
-      firstNamesList: state.firstNamesList.filter(firstName => {
-        return firstName.key !== action.nameKey;
-      })
-    };
+      return {
+        ...state,
+        firstNamesList: state.firstNamesList.filter(firstName => {
+          return firstName.key !== action.nameKey;
+        })
+      };
+
+    case SAVE_NAME:
+      return {
+        ...state,
+        firstName: action.name
+      };
     default:
       return state;
   }

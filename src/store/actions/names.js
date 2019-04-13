@@ -1,4 +1,4 @@
-import { ADD_NAME, DELETE_NAME } from "./actionTypes";
+import { ADD_NAME, DELETE_NAME, SAVE_NAME } from "./actionTypes";
 
 export const addName = firstName => {
   return {
@@ -7,9 +7,16 @@ export const addName = firstName => {
   };
 };
 
-export const deleteName = (key) => {
+export const deleteName = key => {
   return {
     type: DELETE_NAME,
     nameKey: key
+  };
+};
+
+export const saveName = val => {
+  return {
+    type: SAVE_NAME,
+    name: val
   };
 };
