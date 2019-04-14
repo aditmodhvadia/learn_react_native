@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { StyleSheet, View, TextInput, FlatList } from "react-native";
 import { connect } from "react-redux";
 import { addName, deleteName, saveName } from "./store/actions/index";
-
 import ListItem from "./components/ListItem";
+import Icon from "react-native-vector-icons/MaterialIcons";
 import CustomRoundButton from "./components/CustomRoundButton";
 
 type Props = {};
@@ -20,6 +20,18 @@ class Second extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
+        {/* <Header
+          leftComponent={{ icon: "menu", color: "#fff" }}
+          centerComponent={{ text: "Second", style: { color: "#fff" } }}
+          rightComponent={{ icon: "home", color: "#fff" }}
+        /> */}
+
+        <Icon
+          size={30}
+          name="menu"
+          color="white"
+          onPress={() => this.props.navigation.openDrawer()}
+        />
         <CustomRoundButton
           btnText="Previous Screen"
           btnColor="#d3d3"

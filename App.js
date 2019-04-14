@@ -1,11 +1,23 @@
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import {
+  createStackNavigator,
+  createAppContainer,
+  createDrawerNavigator
+} from "react-navigation";
 import Home from "./src/Home";
 import Second from "./src/secondScreen";
+import drawerScreen from "./src/drawerScreen";
 
-const MainNavigator = createStackNavigator(
+const MainNavigator = createDrawerNavigator(
   {
     Home: { screen: Home },
     Second: { screen: Second }
+  },
+  {
+    contentComponent: drawerScreen,
+    drawerWidth: 350
+  },
+  {
+    initialRouteName: "Home"
   }
 );
 
