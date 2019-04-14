@@ -7,11 +7,7 @@ import ListItem from "./components/ListItem";
 import CustomRoundButton from "./components/CustomRoundButton";
 
 type Props = {};
-class Home extends Component<Props> {
-  static navigationOptions = {
-    header: null
-  };
-
+class Second extends Component<Props> {
   firstNameChangedHandler = val => {
     this.props.onSaveName(val);
   };
@@ -25,9 +21,9 @@ class Home extends Component<Props> {
     return (
       <View style={styles.container}>
         <CustomRoundButton
-          btnText="Next Screen"
+          btnText="Previous Screen"
           btnColor="#d3d3"
-          onButtonPress={() => this.props.navigation.navigate("Second")}
+          onButtonPress={() => this.props.navigation.navigate("Home")}
         />
 
         <TextInput
@@ -120,4 +116,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Home);
+)(Second);
